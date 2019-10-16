@@ -14,7 +14,6 @@ description = "디스코드에서 채팅만으로도 즐길 수 있도록 하기
 
 # 디스코드 봇이 저장하는 변수들.
 guilds_dict = {}
-guilds_logchannels = {}
 guilds_games = {}
 
 # 모두의 마피아 게임 도움말 정보 보관 변수들
@@ -71,6 +70,7 @@ async def on_ready():
 
     print(f'현재 봇이 소속된 서버 : {guilds_dict}')
 
+
     # 봇이 플레이중인 게임을 설정할 수 있다. 아래의 "반갑습니다"를 수정하면 된다.
     await bot.change_presence(status=discord.Status.online,
                               activity=discord.Game(name="모두가 즐거운 미니게임을 즐길 수 있는 세상을 만들자!", type=1))
@@ -86,10 +86,6 @@ async def on_disconnect():
     print("사용자 id :", bot.user.id)
     print("개발자 id :", bot.owner_id)
     print("========================")
-    with open('guilds_logchannels.txt', 'wt') as f:
-        f.write(str(guilds_logchannels))
-        f.close()
-    await bot.get_channel().send('이제 마피아 게임은 끝났습니다. 다들 자러 들어가세요! :bed:')
 
 
 # 봇이 서버(디스코드에서는 'guild'라는 개념으로 부름.)에 참여할 때 실행되는 이벤트.
@@ -166,15 +162,20 @@ async def 도움말(ctx):
 async def 게임설정(ctx, mode: str):
     if mode == '클래식':
         print('[modumaf.bot][game] mode set classic')
-        game = Game()
+        game = Game(guildname=ctx.guild.name, gamemode='클래식')
+        guilds_games.update({ctx.guild.name : game})
         await ctx.send('클래식 모드로 설정했습니다.')
 
     elif mode == '확장':
         print('[modumaf.bot][game] mode set normal')
+        game = Game(guildname=ctx.guild.name, gamemode='확장')
+        guilds_games.update({ctx.guild.name : game})
         await ctx.send('확장 모드로 설정했습니다.')
 
     elif mode == '크레이지':
         print('[modumaf.bot][game] mode set crazy')
+        game = Game(guildname=ctx.guild.name, gamemode='크레이지')
+        guilds_games.update({ctx.guild.name : game})
         await ctx.send('크레이지 모드로 설정했습니다.')
     else:
         print('[modumaf.bot][game] unknown request : unknown mode. ')
