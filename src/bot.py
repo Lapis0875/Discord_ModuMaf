@@ -16,10 +16,6 @@ description = "디스코드에서 채팅만으로도 즐길 수 있도록 하기
 guilds_dict = {}
 guilds_games = {}
 
-# 모두의 마피아 게임 도움말 정보 보관 변수들
-modumaf_info = "디스코드에서 채팅만으로 즐길 수 있는 마피아 게임! 모두의 마피아입니다."
-modumaf_modes = '클래식 , 확장 , 크레이지 '
-
 '''
 디스코드 봇을 생성합니다.
 @:arg
@@ -149,13 +145,20 @@ async def 도움말(ctx):
     )
     help_embed.set_author(name="모두의 마피아 봇 도움말",
                           icon_url="https://cdn.discordapp.com/avatars/541645954256863252/e5001111b6743f6f4fb68bbd29309fb4.png?size=1024")
-    help_embed.add_field(name="모두의 마피아 게임 소개", value=modumaf_info, inline=False)
-    help_embed.add_field(name="모드", value=modumaf_modes, inline=False)
+    help_embed.add_field(name="모두의 마피아 게임 소개", value=Game.info, inline=False)
+    help_embed.add_field(name="모드", value=Game.modes, inline=False)
     help_embed.add_field(name="직업", value='일반모드와 크레이지모드로 나뉨', inline=False)
-    help_embed.add_field(name="일반모드 직업", value=modumaf_jobs_normal, inline=True)
-    help_embed.add_field(name="크레이지모드 전용 직업", value=modumaf_jobs_crazy, inline=True)
+    help_embed.add_field(name="일반모드 직업", value=None, inline=True)
+    help_embed.add_field(name="크레이지모드 전용 직업", value=None, inline=True)
 
     await ctx.send(embed=help_embed)
+
+
+'''
+[ 모두의 마피아 게임 명령어 ]
+게임설정 : 파티(플레이어 대기열)를 생성하고, 사용자가 지정한 모드로 게임을 준비합니다.
+게임시작 : 준비된 게임을 시작합니다. 게임은 서버당 한개씩만 진행됩니다. (추후 능력이 되면 늘려보자)
+'''
 
 
 @bot.command()

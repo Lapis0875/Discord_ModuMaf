@@ -9,8 +9,14 @@ class Game:
     gamemode = ''
     players: list = []
     time: int = 0
-    job_classic_dict = {'시민팀' : [Citizen, Police, Doctor], '마피아팀' : [Mafia, Spy], '교주팀' : []}
+    job_Classic_dict = {'시민팀' : [Citizen, Police, Doctor], '마피아팀' : [Mafia], '교주팀' : []}
+    job_Extended_dict = {'시민팀' : [], '마피아팀' : [Spy], '교주팀' : []}
+    is_setuped: bool = False
     on_game: bool = False
+
+    # info variables
+    info = "디스코드에서 채팅만으로 즐길 수 있는 마피아 게임! 모두의 마피아입니다."
+    modes = '클래식 , 확장 , 크레이지 '
 
     def __init__(self, guildname: str, gamemode: str):
         self.guildname = guildname
@@ -52,4 +58,10 @@ class Game:
 
 
     def start(self):
+        if self.is_setuped is True:
+            print('Starting Game')
+        else:
+            return False
+
+
 
